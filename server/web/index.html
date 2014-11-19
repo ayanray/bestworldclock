@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Best World Clock</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="local/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="local/css/starter-template.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="local/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="local/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style class="cssdeck">
+    body { font-size:62.5%; margin:1em; background:#131313 }
+    ul { list-style:none; margin:0; padding:0 }
+
+    .watch-container {
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .watch-row {
+        display: inline-block;
+        margin: 0px 10px;
+    }
+
+    .watch { font-size:1em; position:relative }
+    .watch .frame-face {
+        position:relative;
+        width:30em;
+        height:30em;
+        margin:2em auto;
+        border-radius:15em;
+        background:-webkit-linear-gradient(top, #f9f9f9,#666);
+        background:-moz-linear-gradient(top, #f9f9f9,#666);
+        background:linear-gradient(to bottom, #f9f9f9,#666);
+        box-shadow:rgba(0,0,0,.8) .5em .5em 4em;
+    }
+    .watch .frame-face:before {
+        content:'';
+        width:29.4em;
+        height:29.4em;
+        border-radius:14.7em;
+        position:absolute;
+        top:.3em; left:.3em;
+        background:
+            -webkit-linear-gradient(135deg, rgba(246,248,249,0) 0%,rgba(229,235,238,1) 50%,rgba(205,212,217,1) 51%,rgba(245,247,249,0) 100%),
+            -webkit-radial-gradient(center, ellipse cover, rgba(246,248,249,1) 0%,rgba(229,235,238,1) 65%,rgba(205,212,217,1) 66%,rgba(245,247,249,1) 100%);
+        background:
+            -moz-linear-gradient(135deg, rgba(246,248,249,0) 0%,rgba(229,235,238,1) 50%,rgba(205,212,217,1) 51%,rgba(245,247,249,0) 100%),
+            -moz-radial-gradient(center, ellipse cover, rgba(246,248,249,1) 0%,rgba(229,235,238,1) 65%,rgba(205,212,217,1) 66%,rgba(245,247,249,1) 100%);
+        background:
+            linear-gradient(135deg, rgba(246,248,249,0) 0%,rgba(229,235,238,1) 50%,rgba(205,212,217,1) 51%,rgba(245,247,249,0) 100%),
+            radial-gradient(ellipse at center, rgba(246,248,249,1) 0%,rgba(229,235,238,1) 65%,rgba(205,212,217,1) 66%,rgba(245,247,249,1) 100%);
+    }
+    .watch .frame-face:after {
+        content:'';
+        width:28em;
+        height:28em;
+        border-radius:14.2em;
+        position:absolute;
+        top:.9em; left:.9em;
+        box-shadow:inset rgba(0,0,0,.2) .2em .2em 1em;
+        border:.1em solid rgba(0,0,0,.2);
+        background:-webkit-linear-gradient(top, #fff, #ccc);
+        background:-moz-linear-gradient(top, #fff, #ccc);
+        background:linear-gradient(to bottom, #fff, #ccc);
+    }
+    .watch .minute-marks li {
+        display:block;
+        width:.2em;
+        height:.6em;
+        background:#929394;
+        position:absolute;
+        top:50%; left:50%;
+        margin:-.4em 0 0 -.1em;
+    }
+    .watch .minute-marks li:first-child {transform:rotate(6deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(2) {transform:rotate(12deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(3) {transform:rotate(18deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(4) {transform:rotate(24deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(5) {transform:rotate(36deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(6) {transform:rotate(42deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(7) {transform:rotate(48deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(8) {transform:rotate(54deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(9) {transform:rotate(66deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(10) {transform:rotate(72deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(11) {transform:rotate(78deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(12) {transform:rotate(84deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(13) {transform:rotate(96deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(14) {transform:rotate(102deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(15) {transform:rotate(108deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(16) {transform:rotate(114deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(17) {transform:rotate(126deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(18) {transform:rotate(132deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(19) {transform:rotate(138deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(20) {transform:rotate(144deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(21) {transform:rotate(156deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(22) {transform:rotate(162deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(23) {transform:rotate(168deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(24) {transform:rotate(174deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(25) {transform:rotate(186deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(26) {transform:rotate(192deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(27) {transform:rotate(198deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(28) {transform:rotate(204deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(29) {transform:rotate(216deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(30) {transform:rotate(222deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(31) {transform:rotate(228deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(32) {transform:rotate(234deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(33) {transform:rotate(246deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(34) {transform:rotate(252deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(35) {transform:rotate(258deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(36) {transform:rotate(264deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(37) {transform:rotate(276deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(38) {transform:rotate(282deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(39) {transform:rotate(288deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(40) {transform:rotate(294deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(41) {transform:rotate(306deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(42) {transform:rotate(312deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(43) {transform:rotate(318deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(44) {transform:rotate(324deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(45) {transform:rotate(336deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(46) {transform:rotate(342deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(47) {transform:rotate(348deg) translateY(-12.7em)}
+    .watch .minute-marks li:nth-child(48) {transform:rotate(354deg) translateY(-12.7em)}
+    .watch .digits {
+        width:30em;
+        height:30em;
+        border-radius:15em;
+        position:absolute;
+        top:0; left:50%;
+        margin-left:-15em;
+    }
+    .watch .digits li {
+        font-size:1.6em;
+        display:block;
+        width:1.6em;
+        height:1.6em;
+        position:absolute;
+        top:50%; left:50%;
+        line-height:1.6em;
+        text-align:center;
+        margin:-.8em 0 0 -.8em;
+        font-weight:bold;
+    }
+    .watch .digits li:nth-child(1) { transform:translate(3.9em, -6.9em) }
+    .watch .digits li:nth-child(2) { transform:translate(6.9em, -4em) }
+    .watch .digits li:nth-child(3) { transform:translate(8em, 0) }
+    .watch .digits li:nth-child(4) { transform:translate(6.8em, 4em) }
+    .watch .digits li:nth-child(5) { transform:translate(3.9em, 6.9em) }
+    .watch .digits li:nth-child(6) { transform:translate(0, 8em) }
+    .watch .digits li:nth-child(7) { transform:translate(-3.9em, 6.9em) }
+    .watch .digits li:nth-child(8) { transform:translate(-6.8em, 4em) }
+    .watch .digits li:nth-child(9) { transform:translate(-8em, 0) }
+    .watch .digits li:nth-child(10) { transform:translate(-6.9em, -4em) }
+    .watch .digits li:nth-child(11) { transform:translate(-3.9em, -6.9em) }
+    .watch .digits li:nth-child(12) { transform:translate(0, -8em) }
+    .watch .digits:before {
+        content:'';
+        width:1.6em;
+        height:1.6em;
+        border-radius:.8em;
+        position:absolute;
+        top:50%; left:50%;
+        margin:-.8em 0 0 -.8em;
+        background:#121314;
+    }
+    .watch .digits:after {
+        content:'';
+        width:4em;
+        height:4em;
+        border-radius:2.2em;
+        position:absolute;
+        top:50%; left:50%;
+        margin:-2.1em 0 0 -2.1em;
+        border:.1em solid #c6c6c6;
+        background:-webkit-radial-gradient(center, ellipse cover, rgba(200,200,200,0), rgba(190,190,190,1) 90%, rgba(130,130,130,1) 100%);
+        background:-moz-radial-gradient(center, ellipse cover, rgba(200,200,200,0), rgba(190,190,190,1) 90%, rgba(130,130,130,1) 100%);
+        background:radial-gradient(ellipse at center, rgba(200,200,200,0), rgba(190,190,190,1) 90%, rgba(130,130,130,1) 100%);
+    }
+    @-webkit-keyframes hours { to {transform:rotate(335deg)} }
+    .watch .hours-hand {
+        width:.8em;
+        height:7em;
+        border-radius:0 0 .9em .9em;
+        background:#232425;
+        position:absolute;
+        bottom:50%; left:50%;
+        margin:0 0 -.8em -.4em;
+        box-shadow:#232425 0 0 2px;
+        transform-origin:0.4em 6.2em;
+        transform:rotate(-180deg);
+        -webkit-animation:hours 43200s linear 0s infinite;
+    }
+    .watch .hours-hand:before {
+        content:'';
+        background:inherit;
+        width:1.8em;
+        height:.8em;
+        border-radius:0 0 .8em .8em;
+        box-shadow:#232425 0 0 1px;
+        position:absolute;
+        top:-.7em; left:-.5em;
+    }
+    .watch .hours-hand:after {
+        content:'';
+        width:0; height:0;
+        border:.9em solid #232425;
+        border-width:0 .9em 2.4em .9em;
+        border-left-color:transparent;
+        border-right-color:transparent;
+        position:absolute;
+        top:-3.1em; left:-.5em;
+    }
+    @-webkit-keyframes minutes { to {transform:rotate(422deg)} }
+    .watch .minutes-hand {
+        width:.8em;
+        height:12.5em;
+        border-radius:.5em;
+        background:#343536;
+        position:absolute;
+        bottom:50%; left:50%;
+        margin:0 0 -1.5em -.4em;
+        box-shadow:#343536 0 0 2px;
+        transform-origin:0.4em 11em;
+        transform:rotate(62deg);
+        -webkit-animation:minutes 3600s linear 0s infinite;
+    }
+    @-webkit-keyframes seconds { to {transform:rotate(480deg)} }
+    .watch .seconds-hand {
+        width:.2em;
+        height:14em;
+        border-radius:.1em .1em 0 0/10em 10em 0 0;
+        background:#c00;
+        position:absolute;
+        bottom:50%; left:50%;
+        margin:0 0 -2em -.1em;
+        box-shadow:rgba(0,0,0,.8) 0 0 .2em;
+        transform-origin:0.1em 12em;
+        transform:rotate(250deg);
+        -webkit-animation:seconds 60s steps(60, end) 0s infinite;
+    }
+    .watch .seconds-hand:after {
+        content:'';
+        width:1.4em;
+        height:1.4em;
+        border-radius:.7em;
+        background:inherit;
+        position:absolute;
+        left:-.65em; bottom:1.35em;
+    }
+    .watch .seconds-hand:before {
+        content:'';
+        width:.8em;
+        height:3em;
+        border-radius:.2em .2em .4em .4em/.2em .2em 2em 2em;
+        box-shadow:rgba(0,0,0,.8) 0 0 .2em;
+        background:inherit;
+        position:absolute;
+        left:-.35em; bottom:-3em;
+    }
+    .watch .frame-label {
+        position: absolute;
+        top:50%; left:50%;
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: bold;
+        color: black;
+        width:9em;
+        height:3em;
+        margin:1.8em 0 0 -4.5em;
+        overflow:hidden;
+    }
+    .watch .frame-time {
+        position: absolute;
+        top:50%; left:50%;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: black;
+        width:9em;
+        height:3em;
+        margin:-5em 0 0 -4.5em;
+        overflow:hidden;
+    }
+    @-webkit-keyframes dsm {
+        to { transform:translateY(-120em) }
+    }
+
+    .modal-dialog {
+        padding-top: 15%;
+    }
+
+    </style>
+
+<script type="text/javascript">
+
+    var BestWorldClock = {
+
+        clocks: [],
+
+        addClock: function(label, h, m, s, am) {
+
+            label = label.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                return letter.toUpperCase();
+            });
+
+            var $watch = $( "#watch1" ).clone().appendTo( "#watch-container").removeAttr("id");
+            $watch.find('.frame-label').html(label);
+
+
+            var degree = h / 12 * 360;
+            $watch.find('.hours-hand').css({ 'transform': 'rotate(' + degree + 'deg)'});
+
+            degree = m / 60 * 360;
+            $watch.find('.minutes-hand').css({ 'transform': 'rotate(' + degree + 'deg)'});
+
+            degree = s / 60 * 360;
+            $watch.find('.seconds-hand').css({ 'transform': 'rotate(' + degree + 'deg)'});
+
+            if (am) {
+                $watch.find('.frame-time').html('AM');
+            } else {
+                $watch.find('.frame-time').html('PM');
+            }
+
+            $watch.show();
+
+            this.clocks.push($watch);
+
+            var $watch_row = $("#watch-row").clone().appendTo("#watch-list-container").removeAttr("id");
+
+            $watch_row.find('.row-label').html(label);
+
+            $watch_row.show();
+
+            var $watch_list_empty = $("#watch-list-empty");
+
+            if (this.clocks.length > 0) {
+                $watch_list_empty.hide();
+            } else {
+                $watch_list_empty.show();
+            }
+
+            return true;
+        },
+
+        addClockFromForm: function() {
+            var timezone = $('#watch_list_form').val();
+
+            $.getJSON("http://www.bestworldclock.com/time.php?callback=?&timezone="+timezone, {})
+                    .done(function(data) {
+
+                        var sections = timezone.split('/');
+                        var title = sections[1];
+                        title = title.replace('_', ' ');
+                        BestWorldClock.addClock(BestWorldClock.camelCase(title), data.h, data.m, data.s, parseInt(data.h) < 12);
+                    });
+
+        },
+
+        removeClock: function(clock) {
+
+            var $btn = $(clock).parent().parent();
+            var $parent = $btn.parent();
+
+            var index = $btn.index();
+            $btn.remove();
+
+            if ($parent.children().length == 1) {
+                var $watch_list_empty = $("#watch-list-empty");
+                $watch_list_empty.show();
+            }
+
+            var $label = $btn.select('.row-label');
+
+            var $watch = $( "#watch-container").children().eq(index);
+
+            $watch.remove();
+
+            console.log($watch);
+
+        },
+
+        camelCase: function(input) {
+            return input.toLowerCase().replace(/-(.)/g, function(match, group1) {
+                return group1.toUpperCase();
+            });
+        },
+
+        addTimeZone: function(label, value) {
+
+            $("#watch_list_form").append($('<option>', {value: value}).text(label));
+
+        }
+    };
+</script>
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-header pull-left">
+        <a class="navbar-brand" href="#">Best World Clock</a>
+    </div>
+    <div class="navbar-header pull-right">
+        <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#myModal" style="margin-right: 5px"><span class="glyphicon glyphicon-th-list"></span> Manage</button>
+    </div>
+</div>
+
+<div id="watch-container" class="container watch-container">
+
+    <div id="watch1" class="row watch-row" style="display: none">
+        <div class="watch">
+            <div class="frame-face"></div>
+            <div class="frame-label">London</div>
+            <div class="frame-time">AM</div>
+            <ul class="minute-marks">
+                <li></li><li></li><li></li><li></li><li></li><li></li>
+                <li></li><li></li><li></li><li></li><li></li><li></li>
+                <li></li><li></li><li></li><li></li><li></li><li></li>
+                <li></li><li></li><li></li><li></li><li></li><li></li>
+                <li></li><li></li><li></li><li></li><li></li><li></li>
+                <li></li><li></li><li></li><li></li><li></li><li></li>
+                <li></li><li></li><li></li><li></li><li></li><li></li>
+                <li></li><li></li><li></li><li></li><li></li><li></li>
+            </ul>
+            <ul class="digits">
+                <li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+                <li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+            </ul>
+            <div class="hours-hand"></div>
+            <div class="minutes-hand"></div>
+            <div class="seconds-hand"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Clocks</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="watch-list-container" class="list-group" style="font-size: 2.5em">
+                    <li id="watch-row" class='list-group-item clearfix' style="display:none">
+                        <span class="pull-right">
+                            <button type="button" class="btn btn-danger" onclick="BestWorldClock.removeClock(this); return false;">
+                                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Remove
+                            </button>
+                        </span>
+                        <div class="btn row-label">Item 1</div>
+                    </li>
+                </ul>
+                <div id="watch-list-empty" class="alert alert-warning" role="alert" style="font-size: 2em">None</div>
+                <hr />
+                <form class="form-inline" role="form">
+                    <select id="watch_list_form" class="form-control">
+                    </select>
+                    <button type="submit" class="btn btn-primary" onclick="BestWorldClock.addClockFromForm();return false;">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="local/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="local/js/ie10-viewport-bug-workaround.js"></script>
+<script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-56895632-1', 'auto');
+    ga('send', 'pageview');
+
+    $(document).ready(function(){
+
+        var el = document.getElementById('watch-list-container');
+        new Sortable(el);
+
+        $.getJSON("http://www.bestworldclock.com/timezone.php?callback=?", {})
+                .done(function(data) {
+
+                    for (var i = 0; i < data.length; i++) {
+                        BestWorldClock.addTimeZone(data[i].diff_from_GMT + ' - ' + data[i].zone, data[i].zone);
+                    }
+
+//                    var str = data.dateString;
+//                    str = str.split(':');
+//
+//                    console.log(str);
+//
+//                    BestWorldClock.addClock("London", str[0], str[1], str[1]);
+
+                 });
+    });
+
+</script>
+
+</body>
+</html>
