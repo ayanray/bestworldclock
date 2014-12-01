@@ -26,6 +26,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="local/js/main.js"></script>
+
     <style class="cssdeck">
     body { font-size:62.5%; margin:1em; background:#131313 }
     ul { list-style:none; margin:0; padding:0 }
@@ -311,105 +313,7 @@
 
 <script type="text/javascript">
 
-    var BestWorldClock = {
 
-        clocks: [],
-
-        addClock: function(label, h, m, s, am) {
-
-            label = label.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-                return letter.toUpperCase();
-            });
-
-            var $watch = $( "#watch1" ).clone().appendTo( "#watch-container").removeAttr("id");
-            $watch.find('.frame-label').html(label);
-
-
-            var degree = h / 12 * 360;
-            $watch.find('.hours-hand').css({ 'transform': 'rotate(' + degree + 'deg)'});
-
-            degree = m / 60 * 360;
-            $watch.find('.minutes-hand').css({ 'transform': 'rotate(' + degree + 'deg)'});
-
-            degree = s / 60 * 360;
-            $watch.find('.seconds-hand').css({ 'transform': 'rotate(' + degree + 'deg)'});
-
-            if (am) {
-                $watch.find('.frame-time').html('AM');
-            } else {
-                $watch.find('.frame-time').html('PM');
-            }
-
-            $watch.show();
-
-            this.clocks.push($watch);
-
-            var $watch_row = $("#watch-row").clone().appendTo("#watch-list-container").removeAttr("id");
-
-            $watch_row.find('.row-label').html(label);
-
-            $watch_row.show();
-
-            var $watch_list_empty = $("#watch-list-empty");
-
-            if (this.clocks.length > 0) {
-                $watch_list_empty.hide();
-            } else {
-                $watch_list_empty.show();
-            }
-
-            return true;
-        },
-
-        addClockFromForm: function() {
-            var timezone = $('#watch_list_form').val();
-
-            $.getJSON("http://www.bestworldclock.com/time.php?callback=?&timezone="+timezone, {})
-                    .done(function(data) {
-
-                        var sections = timezone.split('/');
-                        var title = sections[1];
-                        title = title.replace('_', ' ');
-                        BestWorldClock.addClock(BestWorldClock.camelCase(title), data.h, data.m, data.s, parseInt(data.h) < 12);
-                    });
-
-        },
-
-        removeClock: function(clock) {
-
-            var $btn = $(clock).parent().parent();
-            var $parent = $btn.parent();
-
-            var index = $btn.index();
-            $btn.remove();
-
-            if ($parent.children().length == 1) {
-                var $watch_list_empty = $("#watch-list-empty");
-                $watch_list_empty.show();
-            }
-
-            var $label = $btn.select('.row-label');
-
-            var $watch = $( "#watch-container").children().eq(index);
-
-            $watch.remove();
-
-            console.log($watch);
-
-        },
-
-        camelCase: function(input) {
-            return input.toLowerCase().replace(/-(.)/g, function(match, group1) {
-                return group1.toUpperCase();
-            });
-        },
-
-        addTimeZone: function(label, value) {
-
-            $("#watch_list_form").append($('<option>', {value: value}).text(label));
-
-        }
-    };
 </script>
 
 </head>
@@ -427,31 +331,43 @@
 
 <div id="watch-container" class="container watch-container">
 
-    <div id="watch1" class="row watch-row" style="display: none">
-        <div class="watch">
-            <div class="frame-face"></div>
-            <div class="frame-label">London</div>
-            <div class="frame-time">AM</div>
-            <ul class="minute-marks">
-                <li></li><li></li><li></li><li></li><li></li><li></li>
-                <li></li><li></li><li></li><li></li><li></li><li></li>
-                <li></li><li></li><li></li><li></li><li></li><li></li>
-                <li></li><li></li><li></li><li></li><li></li><li></li>
-                <li></li><li></li><li></li><li></li><li></li><li></li>
-                <li></li><li></li><li></li><li></li><li></li><li></li>
-                <li></li><li></li><li></li><li></li><li></li><li></li>
-                <li></li><li></li><li></li><li></li><li></li><li></li>
-            </ul>
-            <ul class="digits">
-                <li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
-                <li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
-            </ul>
-            <div class="hours-hand"></div>
-            <div class="minutes-hand"></div>
-            <div class="seconds-hand"></div>
-        </div>
 
+</div>
+
+<div id="watch1" class="dark clock row watch-row" style="display: none;">
+    <div class="display">
+        <div class="ampm"></div>
+        <div class="city">London</div>
+        <div class="alarm"></div>
+        <div class="digits"></div>
+        <div class="weekdays"></div>
     </div>
+</div>
+
+<div id="watch2" class="row watch-row" style="display: none">
+    <div class="watch">
+        <div class="frame-face"></div>
+        <div class="frame-label">London</div>
+        <div class="frame-time">AM</div>
+        <ul class="minute-marks">
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+        <ul class="digits">
+            <li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+            <li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+        </ul>
+        <div class="hours-hand"></div>
+        <div class="minutes-hand"></div>
+        <div class="seconds-hand"></div>
+    </div>
+
 </div>
 
 <!-- Modal -->
@@ -466,11 +382,12 @@
                 <ul id="watch-list-container" class="list-group" style="font-size: 2.5em">
                     <li id="watch-row" class='list-group-item clearfix' style="display:none">
                         <span class="pull-right">
-                            <button type="button" class="btn btn-danger" onclick="BestWorldClock.removeClock(this); return false;">
+                            <button type="button" class="btn btn-danger" onclick="BestWorldClock.onRemoveClock(this); return false;">
                                 <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Remove
                             </button>
                         </span>
                         <div class="btn row-label">Item 1</div>
+                        <div class="timezone_id" style="display: none;">Item 1</div>
                     </li>
                 </ul>
                 <div id="watch-list-empty" class="alert alert-warning" role="alert" style="font-size: 2em">None</div>
@@ -478,7 +395,7 @@
                 <form class="form-inline" role="form">
                     <select id="watch_list_form" class="form-control">
                     </select>
-                    <button type="submit" class="btn btn-primary" onclick="BestWorldClock.addClockFromForm();return false;">Add</button>
+                    <button type="submit" class="btn btn-primary" onclick="BestWorldClock.onAddClock();return false;">Add</button>
                 </form>
             </div>
         </div>
@@ -489,10 +406,16 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+
 <script src="local/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="local/js/ie10-viewport-bug-workaround.js"></script>
 <script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
+
+<script src="local/themes/digital/script.js"></script>
+<link href="local/themes/digital/style.css" rel="stylesheet">
+
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -501,28 +424,6 @@
 
     ga('create', 'UA-56895632-1', 'auto');
     ga('send', 'pageview');
-
-    $(document).ready(function(){
-
-        var el = document.getElementById('watch-list-container');
-        new Sortable(el);
-
-        $.getJSON("http://www.bestworldclock.com/timezone.php?callback=?", {})
-                .done(function(data) {
-
-                    for (var i = 0; i < data.length; i++) {
-                        BestWorldClock.addTimeZone(data[i].diff_from_GMT + ' - ' + data[i].zone, data[i].zone);
-                    }
-
-//                    var str = data.dateString;
-//                    str = str.split(':');
-//
-//                    console.log(str);
-//
-//                    BestWorldClock.addClock("London", str[0], str[1], str[1]);
-
-                 });
-    });
 
 </script>
 
