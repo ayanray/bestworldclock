@@ -166,7 +166,9 @@ var BestWorldClock = {
     restore: function() {
 
         var locales = getCookie('locales');
-        if (!locales) {
+        if (!locales || locales == '[]') {
+
+            BestWorldClock.addClockNew(new Clock('America/Los_Angeles', 'Los Angeles'));
             return;
         }
 
@@ -326,14 +328,18 @@ function getCookie(cname) {
     return "";
 }
 
-$(document).ready(function(){
-
-    var el = document.getElementById('watch-list-container');
-    new Sortable(el, {
-        onUpdate: function(evt) {
-
+Array.prototype.move = function (old_index, new_index) {
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while ((k--) + 1) {
+            this.push(undefined);
         }
-    });
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+    return this; // for testing purposes
+};
+
+$(document).ready(function(){
 
     $.getJSON("http://www.bestworldclock.com/timezone.php?callback=?", {})
         .done(function(data) {
@@ -352,4 +358,25 @@ $(document).ready(function(){
         (document.body.offsetWidth -document.documentElement.offsetWidth )/2,
         (document.body.offsetHeight-document.documentElement.offsetHeight)/2
     );
+
+//    BestWorldClock.addClockNew(new Clock('Africa/Abidjan', 'Abidjan'));
+//    BestWorldClock.addClockNew(new Clock('Africa/Accra', 'Accra'));
+
+    $("#watch-list-container").sortable({
+        update : function(event, ui) {
+            var index = $(ui.item).index();
+
+            var locale = $(ui.item).children('.timezone_id').html();
+
+            for (var i = 0; i < BestWorldClock.clocks.length; i++) {
+                if (BestWorldClock.clocks[i].getLocale() == locale) {
+                    BestWorldClock.clocks.move(i, index-1);
+                }
+            }
+
+            BestWorldClock.redrawClocks();
+        }
+    });
+    $("#watch-list-container").disableSelection();
+
 });

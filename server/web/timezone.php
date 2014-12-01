@@ -31,3 +31,4 @@ $list = tz_list();
 usort($list, "cmp");
 
 echo $_GET['callback'] . '('.json_encode($list).')';
+
