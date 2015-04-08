@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="Best world clock is a FREE tool that shows all world clocks from around the world. Add any timezone and it saves your world clocks for you for the next time you come back in your cookies. It works for iOS, Android, all mobile devices, and desktop. It's fast, quick, and free.">
+    <meta property="og:title" content="Best World Clock (FREE)"/>
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
     <title>Best World Clock</title>
+
+    <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
 
     <!-- Bootstrap core CSS -->
     <link href="local/css/bootstrap.min.css" rel="stylesheet">
@@ -57,6 +60,7 @@
         <a class="navbar-brand" href="#">Best World Clock</a>
     </div>
     <div class="navbar-header pull-right">
+        <button type="button" class="btn btn-info navbar-btn" style="margin-right: 5px" onclick="BestWorldClock.refreshTimes();return false;"><span class="glyphicon glyphicon-repeat"></span></button>
         <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#myModal" style="margin-right: 5px"><span class="glyphicon glyphicon-th-list"></span> Manage</button>
     </div>
 </div>
@@ -159,6 +163,50 @@
     ga('create', 'UA-56895632-1', 'auto');
     ga('send', 'pageview');
 
+</script>
+
+<script>
+    // Include the UserVoice JavaScript SDK (only needed once on a page)
+    UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/X5LzyRWYgDiVoH2ifq4Q.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+    //
+    // UserVoice Javascript SDK developer documentation:
+    // https://www.uservoice.com/o/javascript-sdk
+    //
+
+    // Set colors
+    UserVoice.push(['set', {
+        accent_color: '#448dd6',
+        trigger_color: 'white',
+        trigger_background_color: '#448dd6'
+    }]);
+
+    // Identify the user and pass traits
+    // To enable, replace sample data with actual user traits and uncomment the line
+    UserVoice.push(['identify', {
+        //email:      'john.doe@example.com', // User’s email address
+        //name:       'John Doe', // User’s real name
+        //created_at: 1364406966, // Unix timestamp for the date the user signed up
+        //id:         123, // Optional: Unique id of the user (if set, this should not change)
+        //type:       'Owner', // Optional: segment your users by type
+        //account: {
+        //  id:           123, // Optional: associate multiple users with a single account
+        //  name:         'Acme, Co.', // Account name
+        //  created_at:   1364406966, // Unix timestamp for the date the account was created
+        //  monthly_rate: 9.99, // Decimal; monthly rate of the account
+        //  ltv:          1495.00, // Decimal; lifetime value of the account
+        //  plan:         'Enhanced' // Plan name for the account
+        //}
+    }]);
+
+    // Add default trigger to the bottom-right corner of the window:
+    UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+
+    // Or, use your own custom trigger:
+    //UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
+
+    // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+    UserVoice.push(['autoprompt', {}]);
 </script>
 
 </body>
